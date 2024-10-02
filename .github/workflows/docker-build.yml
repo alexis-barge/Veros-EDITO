@@ -27,3 +27,16 @@ jobs:
       - name: Push the Docker image
         run: |
           docker push ghcr.io/alexis-barge/veros-edito:latest
+
+      - name: Run Docker container for testing
+        run: |
+          docker run -d --name my-container ghcr.io/alexis-barge/veros-edito:latest
+          
+      - name: Test Docker container is running
+        run: |
+          docker ps | grep my-container
+
+      - name: Cleanup
+        run: |
+          docker stop my-container
+          docker rm my-container
