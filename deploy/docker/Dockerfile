@@ -8,6 +8,7 @@ RUN apk update && apk add --no-cache \
     linux-headers \
     libffi-dev \
     openblas-dev \
+    hdf5-dev \  # Ajout de HDF5
     && pip install --upgrade pip
 
 # install jax with GPU
