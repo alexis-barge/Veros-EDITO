@@ -22,7 +22,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build -t ghcr.io/alexis-barge/veros-edito:latest .
+          docker build -t ghcr.io/alexis-barge/veros-edito:latest -f deploy/Dockerfile .
 
       - name: Push the Docker image
         run: |
