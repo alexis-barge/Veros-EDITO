@@ -1,4 +1,4 @@
-apiVersion: v0.0.1
+apiVersion: v2
 name: veros-demo
 description: Run North Atlantic Veros test case
 icon: https://raw.githubusercontent.com/team-ocean/veros/refs/heads/main/doc/_images/veros-logo-400px.png
