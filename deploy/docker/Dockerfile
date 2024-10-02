@@ -15,9 +15,8 @@ RUN pip install veros
 # define workdir
 WORKDIR /usr/src/app/
 
-# start a bash terminal (for now...)
+# start veros
 EXPOSE 80
-CMD ["sleep", "infinity"]
+CMD ["veros", "copy-setup", "acc"]
 
-# execute veros
-# ...
+CMD ["sleep", "infinity"]
