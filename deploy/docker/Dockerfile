@@ -17,7 +17,7 @@ WORKDIR /usr/src/app/
 
 # start a bash terminal (for now...)
 EXPOSE 80
-CMD ["bash", "pwd"]
+CMD ["sleep", "infinity"]
 
 # execute veros
 # ...
