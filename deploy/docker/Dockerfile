@@ -1,13 +1,17 @@
 # disk image
-FROM ubuntu:20.04  
+FROM python:3.10-alpine
 
 # Python dependencies
-RUN apt-get update && apt-get install -y \
-    python3-pip python3-dev git
+RUN apk update && apk add --no-cache \
+    git \
+    build-base \
+    linux-headers \
+    libffi-dev \
+    openblas-dev \
+    && pip install --upgrade pip
 
 # install jax with GPU
-RUN pip install --upgrade pip && \
-    pip install "jax[cuda12]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+RUN pip install "jax[cuda12]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 
 # install veros
 RUN pip install veros
@@ -17,7 +21,7 @@ WORKDIR /usr/src/app/
 
 # start a bash terminal (for now...)
 EXPOSE 3001
-CMD ["bash"]
+CMD ["sh"]
 
 # execute veros
 # ...
