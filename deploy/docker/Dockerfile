@@ -1,10 +1,22 @@
-# Docker image for the Veros NorthAtlantic test case map application server
-FROM node:16
+# Python dependencies
+RUN apt-get update && apt-get install -y \
+    python3-pip python3-dev git
 
-RUN mkdir -p /usr/src/app && mkdir -p /etc/config/client
-WORKDIR /usr/src/app/component
-COPY . /usr/src/app
+# install jax with GPU
+RUN pip install --upgrade pip && \
+    pip install "jax[cuda12]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 
+# install veros
+RUN pip install veros
+
+# define workdir
+WORKDIR /usr/src/app/
+
+# ??
 EXPOSE 3001
-ENV NODE_ENV=production
-CMD [ "node", "./node_modules/veros-demo-server/lib/app.js", "--config-file", "serverconfig.json" ]
+
+# start a bash terminal (for now...)
+CMD ["bash"]
+
+# execute veros
+#$ ...
