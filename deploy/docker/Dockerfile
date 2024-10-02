@@ -16,7 +16,7 @@ RUN pip install veros
 WORKDIR /usr/src/app/
 
 # start a bash terminal (for now...)
-EXPOSE 3001
+EXPOSE 80
 CMD ["bash"]
 
 # execute veros
