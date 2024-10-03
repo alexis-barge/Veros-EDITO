@@ -9,14 +9,17 @@ RUN apt-get update && apt-get install -y \
 RUN pip install --upgrade pip && \
     pip install "jax[cuda12]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 
-# install veros
+# Install Veros
 RUN pip install veros
 
-# define workdir
+# Define workdir
 WORKDIR /usr/src/app/
 
-# start veros
-EXPOSE 80
-CMD ["veros", "copy-setup", "acc"]
+# Copy the ACC setup for Veros
+RUN veros copy-setup acc
 
-CMD ["sleep", "infinity"]
+# Expose port (if necessary, depending on Veros usage)
+EXPOSE 80
+
+# Run the simulation
+CMD ["veros", "run", "setup.py"]
