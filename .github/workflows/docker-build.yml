@@ -34,6 +34,7 @@ jobs:
           
       - name: Test Docker container is running
         run: |
+          sleep 5s
           docker ps | grep my-container
 
       - name: Cleanup
