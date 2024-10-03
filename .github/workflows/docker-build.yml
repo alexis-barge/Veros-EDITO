@@ -37,6 +37,14 @@ jobs:
           sleep 5s
           docker ps | grep my-container || echo "Container is not running."
 
+      - name: Get Docker logs
+        run: |
+          docker logs my-container
+          
+      - name: Inspect Docker container
+        run: |
+          docker inspect my-container
+          
       - name: Cleanup
         run: |
           docker stop my-container
