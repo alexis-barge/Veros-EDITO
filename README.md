@@ -1,4 +1,4 @@
-# EDITO Hackthon Grenoble
+# [EDITO Hackathon Grenoble](https://github.com/edito-model-lab/2024-10_grenoble-edito-hackathon)
 
 Veros is the VERsatile Ocean Simulator. It's a ocean model written all in python with the framework JAX. It's able to run global ocean models and also regional models. 
 JAX is a framework that replace numpy to make python work on GPU with good performances and that allows automatic differentiations. 
