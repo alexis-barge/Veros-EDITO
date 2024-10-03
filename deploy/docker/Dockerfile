@@ -22,4 +22,4 @@ RUN veros copy-setup acc
 EXPOSE 80
 
 # Run the simulation
-CMD ["veros", "run", "setup.py"]
+CMD ["veros", "run", "acc/acc.py"]
