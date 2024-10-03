@@ -1,0 +1,14 @@
+apiVersion: v2
+name: veros-demo
+description: Run North Atlantic Veros test case
+icon: https://raw.githubusercontent.com/team-ocean/veros/refs/heads/main/doc/_images/veros-logo-400px.png
+home: https://github.com/alexis-barge/Veros-EDITO
+keywords:
+  - Veros
+type: application
+version: 1.0.0
+appVersion: "0.0.1"
+dependencies:
+  - name: library-chart
+    version: 1.5.16
+    repository: https://inseefrlab.github.io/helm-charts-interactive-services

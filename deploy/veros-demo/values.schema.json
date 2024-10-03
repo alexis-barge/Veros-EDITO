@@ -2,28 +2,6 @@
   "$schema": "http://json-schema.org/schema#",
   "type": "object",
   "properties": {
-    "service": {
-      "description": "Service specific configuration",
-      "type": "object",
-      "properties": {
-        "image": {
-          "description": "docker image",
-          "type": "object",
-          "properties": {
-            "version": {
-              "description": "supported versions",
-              "type": "string",
-              "listEnum": [
-                "ghcr.io/alexis-barge/veros-edito:latest"
-              ],
-              "render": "list",
-              "pattern": "^[a-z0-9-_./]+(:[a-z0-9-_.]+)?$",
-              "default": "ghcr.io/alexis-barge/veros-edito:latest"
-            }
-          }
-        }
-      }
-    },
     "resources": {
       "description": "Your service will have at least the requested resources and never more than its limits. No limit for a resource and you can consume everything left on the host machine.",
       "type": "object",
@@ -42,8 +20,8 @@
               "default": "100m",
               "render": "slider",
               "sliderMin": 50,
-              "sliderMax": 1000,
-              "sliderStep": 50,
+              "sliderMax": 4000,
+              "sliderStep": 100,
               "sliderUnit": "m",
               "sliderExtremity": "down",
               "sliderExtremitySemantic": "guaranteed",
@@ -81,11 +59,11 @@
               "description": "The maximum amount of cpu",
               "title": "CPU",
               "type": "string",
-              "default": "1000m",
+              "default": "2000m",
               "render": "slider",
               "sliderMin": 50,
-              "sliderMax": 1000,
-              "sliderStep": 50,
+              "sliderMax": 4000,
+              "sliderStep": 100,
               "sliderUnit": "m",
               "sliderExtremity": "up",
               "sliderExtremitySemantic": "Maximum",
@@ -117,46 +95,114 @@
         }
       }
     },
-    "ingress": {
+    "s3": {
+      "description": "Configuration of temporary identity",
       "type": "object",
-      "form": true,
-      "title": "Ingress Details",
+      "x-onyxia": {
+        "overwriteSchemaWith": "ide/s3.json"
+      },
       "properties": {
         "enabled": {
-          "description": "Enable Ingress",
           "type": "boolean",
-          "default": true,
-          "x-onyxia": {
-            "overwriteDefaultWith": "k8s.ingress"
-          }
+          "description": "Add S3 temporary identity inside your environment",
+          "default": true
         },
-        "hostname": {
+        "accessKeyId": {
+          "description": "AWS Access Key",
           "type": "string",
-          "pattern": "^[-a-zA-Z0-9@:%_\\+~#=]{1,100}\\.lab\\.(dive|staging)\\.edito\\.eu$",
-          "form": true,
-          "title": "Hostname",
           "x-form": {
-            "hidden": true,
-            "value": "{{project.id}}-{{k8s.randomSubdomain}}-0.{{k8s.domain}}"
+            "value": "{{s3.AWS_ACCESS_KEY_ID}}"
           },
           "x-onyxia": {
-            "hidden": true,
-            "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-0.{{k8s.domain}}"
+            "overwriteDefaultWith": "s3.AWS_ACCESS_KEY_ID"
+          },
+          "hidden": {
+            "value": false,
+            "path": "s3/enabled"
+          }
+        },
+        "endpoint": {
+          "description": "AWS S3 Endpoint",
+          "type": "string",
+          "x-form": {
+            "value": "{{s3.AWS_S3_ENDPOINT}}"
+          },
+          "x-onyxia": {
+            "overwriteDefaultWith": "{{s3.AWS_S3_ENDPOINT}}"
+          },
+          "hidden": {
+            "value": false,
+            "path": "s3/enabled"
+          }
+        },
+        "defaultRegion": {
+          "description": "AWS S3 default region",
+          "type": "string",
+          "x-form": {
+            "value": "{{s3.AWS_DEFAULT_REGION}}"
+          },
+          "x-onyxia": {
+            "overwriteDefaultWith": "{{s3.AWS_DEFAULT_REGION}}"
+          },
+          "hidden": {
+            "value": false,
+            "path": "s3/enabled"
+          }
+        },
+        "secretAccessKey": {
+          "description": "AWS S3 secret access key",
+          "type": "string",
+          "render": "password",
+          "x-form": {
+            "value": "{{s3.AWS_SECRET_ACCESS_KEY}}"
+          },
+          "x-onyxia": {
+            "overwriteDefaultWith": "{{s3.AWS_SECRET_ACCESS_KEY}}"
+          },
+          "hidden": {
+            "value": false,
+            "path": "s3/enabled"
+          }
+        },
+        "sessionToken": {
+          "description": "AWS S3 session Token",
+          "type": "string",
+          "render": "password",
+          "x-form": {
+            "value": "{{s3.AWS_SESSION_TOKEN}}"
+          },
+          "x-onyxia": {
+            "overwriteDefaultWith": "{{s3.AWS_SESSION_TOKEN}}"
+          },
+          "hidden": {
+            "value": false,
+            "path": "s3/enabled"
           }
         }
       }
     },
-    "global": {
-      "description": "Suspend",
+    "startupProbe": {
+      "type": "object",
+      "description": "Start up probe",
+      "default": {},
+      "x-form": {
+        "hidden": true,
+        "value": "{{region.startupProbe}}"
+      },
+      "x-onyxia": {
+        "hidden": true,
+        "overwriteDefaultWith": "region.startupProbe"
+      }
+    },
+    "processInputs": {
+      "description": "config Link",
       "type": "object",
       "properties": {
-        "suspend": {
-          "type": "boolean",
-          "description": "Suspend this service",
-          "default": false,
-          "x-onyxia": {
-            "hidden": true
-          }
+        "config_url": {
+          "type": "string",
+          "title": "Link to a Veros config",
+          "description": "to run Veros with a link to a config",
+          "default": "Fixed built-in ACC config for now"
         }
       }
     }

@@ -1,4 +1,0 @@
-
-Your Demo of Veros North Atlantic test case is being deployed.
-
-It will be available on this [link](http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }}).
